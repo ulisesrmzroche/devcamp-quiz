@@ -1,0 +1,22 @@
+<nav class="navbar navbar-light bg-faded">
+  <a class="navbar-brand" href="#">Recordly</a>
+
+  {{#if session.isAuthenticated}}
+    <ul class="nav navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  {{/if}}
+
+  <ul class='nav navbar-nav pull-xs-right'>
+    {{#if session.isAuthenticated}}
+      Logged in as {{session.currentUser.displayName}}
+      <button class='btn btn-secondary' {{action "signOut"}}>Sign out</button>
+      {{outlet}}
+    {{else}}
+      <button class='btn btn-primary' {{action "signIn" "twitter"}}>Sign in with Twitter</button>
+    {{/if}}
+  </ul>
+
+</nav>
