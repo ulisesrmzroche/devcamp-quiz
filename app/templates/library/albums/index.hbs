@@ -1,0 +1,14 @@
+{{#each model.albums as |album|}}
+  {{album.name}}
+{{else}}
+  <div class='card'>
+    <div class='card-block'>
+      <p class='card-title'>No Albums In Library Yet</p>
+    </div>
+    <div class='card-block'>
+    {{#link-to 'library.albums.new' class='btn btn-primary'}}
+      Add Album To Library
+    {{/link-to}}
+    </div>
+  </div>
+{{/each}}

@@ -1,0 +1,16 @@
+{{#if inline}}
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="sr-only" for="exampleInputEmail3">New Artist Name</label>
+      {{input value=model.name placeholder='Enter New Artist' focus-out='save'}}
+    </div>
+  </form>
+{{else}}
+  <form>
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Name</label>
+      {{input class='form-control' value=model.name}}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{{/if}}

@@ -1,0 +1,34 @@
+<form class="form">
+<legend>New Song</legend>
+<fieldset class='form-group'>
+  {{input class='form-control' value=newSong.title placeholder="title"}}
+</fieldset>
+<fieldset class='form-group'>
+  {{#if isEditingArtist}}
+    {{#if willCreateNewArtist}}
+      {{new-artist-form selectedValue=newSong.artist inline=true}}
+    {{else}}
+      {{input-select-artist options=artists selectedValue=newSong.artist placeHolderText='Select Artist' noMatchesFound='createNewArtist' noMessagePlaceHolderText="Create New Artist" onSuccess="assignArtist"}}
+    {{/if}}
+  {{else}}
+    {{input class='form-control' value=newSong.artist.name}}
+  {{/if}}
+</fieldset>
+<fieldset class='form-group'>
+  {{#if isEditingAlbum}}
+    {{#if willCreateNewAlbum}}
+      {{new-album-form selectedValue=newSong.album inline=true}}
+    {{else}}
+      {{input-select-album options=albums selectedValue=newSong.album placeHolderText='Select Album' noMatchesFound='createNewAlbum' noMessagePlaceHolderText="Create New Album" onSuccess="assignAlbum"}}
+    {{/if}}
+  {{else}}
+    <span {{action 'editAlbum'}}>
+      {{input class='form-control' value=newSong.album.name}}
+    </span>
+  {{/if}}
+</fieldset>
+ <div class='form-actions pull-xs-right'>
+   <button class="btn btn-link" type="submit" {{action 'cancel'}}>Cancel</button>
+   <button class="btn btn-success" type="submit" {{action 'save'}}>Save</button>
+ </div>
+</form>

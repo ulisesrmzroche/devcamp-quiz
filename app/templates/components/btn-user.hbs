@@ -1,0 +1,13 @@
+<!-- Single button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{user-profile-image src=session.currentUser.profileImageURL height="30" width="30"}} {{session.currentUser.username}}
+  </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <!-- <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div> -->
+    <a class="dropdown-item" href="#" {{action 'signOut'}}>Sign Out</a>
+  </div>
+</div>

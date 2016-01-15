@@ -1,0 +1,19 @@
+  <div class='row'>
+  {{#side-bar class='col-md-1'}}
+    <ul class="nav nav-pills nav-stacked">
+      <li class="nav-item">
+        {{#link-to 'user.favorites' session.currentUser class='nav-link'}}
+          Favorites
+        {{/link-to}}
+      </li>
+      <li class="nav-item">
+        {{#link-to 'user.collection' session.currentUser class='nav-link'}}
+          Collection
+        {{/link-to}}
+      </li>
+    </ul>
+  {{/side-bar}}
+  <div class='col-md-5 col-md-offset-3'>
+    {{outlet}}
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<!-- Single button -->
+<div class="btn-group btn-add-to-record-collection">
+  <button type="button" class="btn btn-success-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class='fa fa-plus'></i>
+  </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <li class="dropdown-item"><strong>Add To Library</strong></li>
+    {{#link-to 'library.songs.new' class='dropdown-item'}} New Song{{/link-to}}
+    {{#link-to 'library.albums.new' class='dropdown-item'}} New Album{{/link-to}}
+    {{#link-to 'library.artists.new' class='dropdown-item'}} New Artist{{/link-to}}
+  </div>
+</div>
