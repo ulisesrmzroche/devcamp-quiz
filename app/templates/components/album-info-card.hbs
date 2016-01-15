@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">{{album.name}}</h4>
+  </div>
+  <div class='card-block'>
+    <p class='card-text'>Artists</p>
+    <ul>
+      {{#each album.artists as |artist|}}
+        <li>
+          {{#link-to 'library.artists.artist' artist}}{{artist.name}}{{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="card-block">
+    <p class='card-text'>Songs</p>
+    <ul>
+      {{#each album.songs as |song|}}
+        <li>
+          {{#link-to 'library.songs.song' song}}{{song.title}}{{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

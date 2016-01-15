@@ -1,7 +1,5 @@
 {{#each model as |song|}}
-  {{#link-to 'library.songs.song' song}}
-    {{song.title}}
-  {{/link-to}}
+  {{song-info-card song=song compact=true}}
 {{else}}
   <div class='card'>
     <div class='card-block'>
