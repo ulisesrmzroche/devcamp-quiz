@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model(){
-    return this.modelFor('library.songs');
-  }
+    return this.get('store').findAll('song');
+  },
+  store: Ember.inject.service()
 });

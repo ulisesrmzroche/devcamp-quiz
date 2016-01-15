@@ -1,8 +1,11 @@
 <form class="form">
-<legend>New Song</legend>
-<fieldset class='form-group'>
-  {{input class='form-control' value=newSong.title placeholder="title"}}
-</fieldset>
+  <legend>New Song</legend>
+  {{! Title}}
+  <fieldset class='form-group'>
+    <label for="exampleInputEmail1">Title</label>
+    {{input class='form-control' value=newSong.title}}
+  </fieldset>
+
 <fieldset class='form-group'>
   {{#if isEditingArtist}}
     {{#if willCreateNewArtist}}
@@ -26,6 +29,9 @@
       {{input class='form-control' value=newSong.album.name}}
     </span>
   {{/if}}
+</fieldset>
+<fieldset class='form-group'>
+  {{input value=newSong.ytSource class='form-control' placeholder="Youtube Link"}}
 </fieldset>
  <div class='form-actions pull-xs-right'>
    <button class="btn btn-link" type="submit" {{action 'cancel'}}>Cancel</button>

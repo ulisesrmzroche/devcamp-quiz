@@ -15,7 +15,4 @@ export default Ember.Route.extend({
       albums: this.get('store').findAll('album')
     });
   },
-  afterModel(){
-    this.transitionTo('library.songs');
-  }
 });

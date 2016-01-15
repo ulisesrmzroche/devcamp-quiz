@@ -1,1 +1,67 @@
-{{yield}}
+{{#if hasCollection}}
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">My Favorites</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <div class="card-block">
+    <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#favorites-tab-songs" role="tab">Songs</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#favorites-tab-artists" role="tab">Artists</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#favorites-tab-albums" role="tab">Albums</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="favorites-tab-songs" role="tabpanel">
+    <ul>
+      {{#each user.songs as |song|}}
+        <li>{{song.title}}</li>
+      {{else}}
+        <li>No Favorite Songs Yet</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="tab-pane" id="favorites-tab-artists" role="tabpanel">
+    <ul>
+      {{#each user.artists as |artist|}}
+        <li>{{artist.name}}</li>
+      {{else}}
+        <li>No Favorite Artists Yet</li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="tab-pane" id="favorites-tab-albums" role="tabpanel">
+    <ul>
+      {{#each user.albums as |album|}}
+        <li>{{album.name}}</li>
+      {{else}}
+        <li>No Favorite Albums Yet</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+  </div>
+
+</div>
+{{else}}
+  <div class='card'>
+    <div class='card-block'>
+      No Items in Collection
+    </div>
+    <div class="card-block">
+      <div class='btn-group'>
+        {{#link-to 'library' class='btn btn-secondary'}}View Library{{/link-to}}
+      </div>
+    </div>
+  </div>
+{{/if}}

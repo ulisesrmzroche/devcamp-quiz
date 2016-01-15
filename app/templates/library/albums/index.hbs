@@ -1,5 +1,5 @@
 {{#each model.albums as |album|}}
-  {{album.name}}
+  {{#link-to 'library.albums.album' album}}{{album.name}}{{/link-to}}
 {{else}}
   <div class='card'>
     <div class='card-block'>

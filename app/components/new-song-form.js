@@ -16,6 +16,17 @@ export default Ember.Component.extend({
   albums: computed(function(){
     return this.get('store').findAll('album');
   }),
+
+  connectAlbumAndBand(song){
+    let artist = song.get('artist');
+    let album = song.get('album');
+
+    album.get('artists').pushObject(artist);
+    album.save();
+    artist.get('albums').pushObject(album);
+    artist.save();
+  },
+
   actions: {
     willInput(){
       this.set('willInput', true);
@@ -25,11 +36,12 @@ export default Ember.Component.extend({
     },
     save(){
       let isValid = this._validate();
-      let currentUser = this.get('session.currentUser');
+
       if (isValid) {
         return this.get('newSong').save().then((song)=>{
-          currentUser.get('songs').pushObject(song);
-          return currentUser.save();
+          return this.connectAlbumAndBand(song);
+        }).then(()=>{
+          return this.sendAction('onSuccess');
         });
       }
     },

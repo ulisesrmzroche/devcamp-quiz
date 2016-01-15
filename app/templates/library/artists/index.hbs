@@ -1,5 +1,7 @@
-{{#each model.songs as |song|}}
-  {{song.title}}
+{{#each model as |artist|}}
+  {{#link-to 'library.artists.artist' artist}}
+    {{artist.name}}
+  {{/link-to}}
 {{else}}
   <div class='card'>
     <div class='card-block'>

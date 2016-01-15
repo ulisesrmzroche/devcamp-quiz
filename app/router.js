@@ -8,17 +8,19 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('home', {path: '/'}, function() {
     this.route('myFavorites', {path: '/my-favorites'});
-    this.route('myRecordCollection', {path: 'my-collection'});
+    this.route('myRecordCollection', {path: '/my-collection'});
   });
 
   // Library
   this.route('library', function() {
     this.route('songs', function() {
       this.route('new');
+      this.route('song', {path: '/:id'});
     });
 
     this.route('artists', function() {
       this.route('new');
+      this.route('artist', {path: '/:id'});
     });
 
     this.route('albums', function() {
