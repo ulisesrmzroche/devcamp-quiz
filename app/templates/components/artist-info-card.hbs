@@ -1,14 +1,14 @@
 {{#if expanded}}
 <div class="card">
   <div class="card-block">
-    <h4 class="card-title">{{album.name}}</h4>
+    <h4 class="card-title">{{artist.name}}</h4>
   </div>
   <div class='card-block'>
     <p class='card-text'>Artists</p>
     <ul>
-      {{#each album.artists as |artist|}}
+      {{#each artist.albums as |album|}}
         <li>
-          {{#link-to 'library.artists.artist' artist}}{{artist.name}}{{/link-to}}
+          {{#link-to 'library.albums.album' album}}{{album.name}}{{/link-to}}
         </li>
       {{else}}
         <li>
@@ -20,7 +20,7 @@
   <div class="card-block">
     <p class='card-text'>Songs</p>
     <ul>
-      {{#each album.songs as |song|}}
+      {{#each artist.songs as |song|}}
         <li>
           {{#link-to 'library.songs.song' song}}{{song.title}}{{/link-to}}
         </li>
@@ -31,8 +31,8 @@
 {{else}}
 <div class='card'>
   <div class='card-block'>
-    {{#link-to 'library.albums.album' album}}
-      {{album.name}}
+    {{#link-to 'library.artists.artist' artist}}
+      {{artist.name}}
     {{/link-to}}
     <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
       {{#if isFavorite}}

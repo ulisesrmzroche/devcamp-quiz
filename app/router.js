@@ -7,8 +7,8 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('home', {path: '/'}, function() {
-    this.route('myFavorites', {path: '/my-favorites'});
     this.route('myRecordCollection', {path: '/my-collection'});
+    this.route('myFavorites', {path: '/my-favorites'});
   });
 
   // Library
@@ -29,7 +29,9 @@ Router.map(function() {
     });
   });
 
-  this.route('user', {path: '/:id'}, function() {});
+  this.route('user', {path: '/:id'}, function() {
+    this.route('favorites');
+  });
 });
 
 export default Router;

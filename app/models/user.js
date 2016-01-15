@@ -5,6 +5,6 @@ export default DS.Model.extend({
   username: DS.attr('string'),
   profileImageURL: DS.attr('string'),
   songs: DS.hasMany('song', {async: true}),
-  artists: DS.hasMany('artist'),
-  albums: DS.hasMany('album')
+  artists: DS.hasMany('artist', {async: true}),
+  albums: DS.hasMany('album', {async: true})
 });

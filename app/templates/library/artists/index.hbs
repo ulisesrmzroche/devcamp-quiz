@@ -1,16 +1,9 @@
 {{#each model as |artist|}}
-  {{#link-to 'library.artists.artist' artist}}
-    {{artist.name}}
-  {{/link-to}}
+  {{artist-info-card artist=artist}}
 {{else}}
-  <div class='card'>
-    <div class='card-block'>
-      <p class='card-title'>No Artists In Library Yet</p>
-    </div>
-    <div class='card-block'>
-    {{#link-to 'library.artists.new' class='btn btn-primary'}}
-      Add Artist To Library
+  {{#warning-card title="No Artists in Library"}}
+    {{#link-to 'library.albums.new' class='btn btn-primary'}}
+      Add Album To Library
     {{/link-to}}
-    </div>
-  </div>
+  {{/warning-card}}
 {{/each}}

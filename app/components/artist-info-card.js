@@ -3,22 +3,21 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   session: Ember.inject.service(),
-  isFavorite: computed('session.currentUser.albums', 'album', function(){
+  isFavorite: computed('session.currentUser.artists', 'artist', function(){
     let currentUser = this.get('session.currentUser');
-    let song = this.get('album');
-    return currentUser.get('albums').contains(song);
+    let artist = this.get('artist');
+    return currentUser.get('artists').contains(artist);
   }),
   actions: {
     toggleFavorite(){
       let currentUser = this.get('session.currentUser');
-      let album = this.get('album');
+      let artist = this.get('artist');
 
       if (this.get('isFavorite')) {
-        currentUser.get('albums').removeObject(album);
+        currentUser.get('artists').removeObject(artist);
       } else {
-        currentUser.get('albums').pushObject(album);
+        currentUser.get('artists').pushObject(artist);
       }
-
       return currentUser.save();
     }
   }
