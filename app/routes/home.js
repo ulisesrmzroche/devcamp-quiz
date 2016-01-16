@@ -2,13 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   session: Ember.inject.service(),
-  model(){
+  beforeModel(){
     if (this.get('session.isAuthenticated')) {
-      return Ember.RSVP.hash({
-        favorites: {
-          songs: this.get('session.currentUser').get('songs')
-        }
-      });
+      return this.transitionTo('myFavorites');
     }
   },
 });

@@ -1,17 +1,48 @@
+{{#if hasFavorites}}
 <div class="card">
-  <div class="card-block">
-    <h4 class="card-title">My Favorites</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <div class='card-block'>
+    <h4 class='card-title'>My Favorites</h4>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#favorites-tab-songs" role="tab">Songs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#favorites-tab-artists" role="tab">Artists</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#favorites-tab-albums" role="tab">Albums</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="favorites-tab-songs" role="tabpanel">
+        {{#each user.songs as |song|}}
+          {{song-info-card compact=true song=song}}
+        {{else}}
+          {{warning-card title="No Favorite Songs Yet"}}
+        {{/each}}
+      </div>
+
+      <div class="tab-pane" id="favorites-tab-artists" role="tabpanel">
+        {{#each user.artists as |artist|}}
+          {{artist-info-card expanded=false artist=artist}}
+        {{else}}
+          {{warning-card title="No Favorite Artists Yet"}}
+        {{/each}}
+      </div>
+
+      <div class="tab-pane" id="favorites-tab-albums" role="tabpanel">
+        {{#each user.albums as |album|}}
+          {{album-info-card expanded=false album=album}}
+        {{else}}
+          {{warning-card title="No Favorite Albums Yet"}}
+        {{/each}}
+      </div>
+
+    </div>
   </div>
 </div>
-  <div class='card'>
-    <div class='card-block'>
-      No Favorites
-    </div>
-    <div class="card-block">
-
-      <div class='btn-group'>
-        {{#link-to 'library.songs' class='btn btn-secondary'}}View Library{{/link-to}}
-      </div>
-    </div>
-  </div>
+{{else}}
+  {{#warning-card title="No Favorites Yet"}}
+    Add Some from the Library
+  {{/warning-card}}
+{{/if}}
