@@ -6,11 +6,15 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
   newSong: computed(function(){
-    return this.get('store').createRecord('song');
+    return this.get('store').createRecord('song', {
+      artist: null
+    });
   }),
+
   artists: computed(function(){
     return this.get('store').findAll('artist');
   }),
+
   isEditingArtist: true,
   isEditingAlbum: true,
   albums: computed(function(){

@@ -29,18 +29,18 @@
   </div>
 </div>
 {{else}}
-<div class='card'>
-  <div class='card-block'>
-    {{#link-to 'library.artists.artist' artist}}
-      {{artist.name}}
-    {{/link-to}}
-    <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
-      {{#if isFavorite}}
-        <i class='fa fa-star'></i>
-      {{else}}
-        <i class='fa fa-star-o'></i>
-      {{/if}}
-    </button>
+  <div class='card'>
+    <div class='card-block'>
+      {{#link-to 'library.artists.artist' artist}}
+        {{artist.name}}
+      {{/link-to}}
+      <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
+        {{#if isFavorite}}
+          <i class='fa fa-star'></i>
+        {{else}}
+          <i class='fa fa-star-o'></i>
+        {{/if}}
+      </button>
+    </div>
   </div>
-</div>
 {{/if}}
