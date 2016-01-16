@@ -1,4 +1,3 @@
-
 import Ember from 'ember';
 const { computed } = Ember;
 
@@ -58,6 +57,9 @@ export default Ember.Component.extend({
     createNewAlbum(){
       this.set('willCreateNewAlbum', true);
     },
+    validateTitle(){
+      return this._validate('title');
+    },
     assignArtist(artist){
       this.set('newSong.artist', artist);
       this.set('isEditingArtist', false);
@@ -67,10 +69,62 @@ export default Ember.Component.extend({
       this.set('isEditingAlbum', false);
     }
   },
-  _validate(){
-    let model = this.get('newSong');
-    let isValid = model.get('title') && model.get('album') && model.get('artist');
-    return isValid;
+  songs: computed(function(){
+    return this.get('store').findAll('song');
+  }),
+
+  _validateTitle(){
+    return this.get('songs').then((songs)=>{
+      let songList = songs.mapBy('title').compact();
+      songList.pop();
+      let newSongName = this.get('newSong.title');
+      let songListContainsSong = songList.contains(newSongName);
+      return songListContainsSong;
+    }).then((songListContainsSong) => {
+      let isValid = songListContainsSong ? false : true;
+      this.set('validations.title.isValid', isValid);
+      if (!isValid) {
+        this.set('validations.title.warnDanger', true);
+      } else {
+        this.set('validations.title.warnDanger', false);
+      }
+      this._handleValidationState('display', 'title', isValid);
+    });
+
+  },
+
+  _clearValidationState(strategy, attribute){
+    if (strategy === 'display') {
+      let $target = Ember.$(`#new-song-${attribute}-fieldset`);
+      $target.removeClass('has-success');
+      $target.removeClass('has-danger');
+      $target.removeClass('has-warning');
+    }
+  },
+  _handleValidationState(strategy, attribute, state){
+    this._clearValidationState(strategy, attribute);
+    if (strategy === 'display') {
+      let $validationState = state ? 'has-success' : 'has-danger';
+      alert($validationState);
+      return Ember.$(`#new-song-${attribute}-fieldset`).addClass($validationState);
+    }
+  },
+
+  validations: {
+    title: {
+      isValid: null,
+      warnDanger: false,
+    }
+  },
+
+  _validate(attribute){
+    if (attribute === 'title') {
+      return this._validateTitle();
+    } else {
+      let model = this.get('newSong');
+      let isValid = model.get('title') && model.get('album') && model.get('artist');
+      return isValid;
+    }
   },
   willDestroyElement(){
     this.get('newSong').rollback();

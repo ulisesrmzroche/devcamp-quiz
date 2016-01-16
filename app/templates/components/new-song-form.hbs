@@ -1,41 +1,55 @@
 <form class="form">
   <legend>New Song</legend>
   {{! Title}}
-  <fieldset class='form-group'>
+
+  <fieldset id="new-song-title-fieldset" class='form-group'>
     <label for="exampleInputEmail1">Title</label>
-    {{input class='form-control' value=newSong.title}}
+    {{input class='form-control' value=newSong.title focus-out='validateTitle'}}
+    {{#if validations.title.warnDanger}}
+      <small class="text-muted">
+        Invalid/Duplicate Title
+      </small>
+    {{/if}}
   </fieldset>
 
-<fieldset class='form-group'>
-  {{#if isEditingArtist}}
-    {{#if willCreateNewArtist}}
-      {{new-artist-form selectedValue=newSong.artist inline=true}}
+  {{! Artist}}
+  <fieldset class='form-group'>
+    {{#if isEditingArtist}}
+      {{input-select-artist id="new-artist-input-select"
+                            options=artists
+                            selectedValue=newSong.artist
+                            placeHolderText='Select Artist'
+                            noMessagePlaceHolderText="Create New Artist"
+                            onSuccess="assignArtist"}}
     {{else}}
-      {{input-select-artist id="new-artist-input-select" options=artists selectedValue=newSong.artist placeHolderText='Select Artist' noMatchesFound='createNewArtist' noMessagePlaceHolderText="Create New Artist" onSuccess="assignArtist"}}
+      {{input class='form-control' value=newSong.artist.name}}
     {{/if}}
-  {{else}}
-    {{input class='form-control' value=newSong.artist.name}}
-  {{/if}}
-</fieldset>
+  </fieldset>
 
-<fieldset class='form-group'>
-  {{#if isEditingAlbum}}
-    {{#if willCreateNewAlbum}}
-      {{new-album-form selectedValue=newSong.album inline=true}}
+  {{! Album}}
+  <fieldset class='form-group'>
+    {{#if isEditingAlbum}}
+      {{input-select-album id="new-album-input-select"
+                           options=albums
+                           selectedValue=newSong.album
+                           placeHolderText='Select Album'
+                           noMessagePlaceHolderText="Create New Album"
+                           onSuccess="assignAlbum"}}
     {{else}}
-      {{input-select-album id="new-album-input-select" options=albums selectedValue=newSong.album placeHolderText='Select Album' noMatchesFound='createNewAlbum' noMessagePlaceHolderText="Create New Album" onSuccess="assignAlbum"}}
+      <span {{action 'editAlbum'}}>
+        {{input class='form-control' value=newSong.album.name}}
+      </span>
     {{/if}}
-  {{else}}
-    <span {{action 'editAlbum'}}>
-      {{input class='form-control' value=newSong.album.name}}
-    </span>
-  {{/if}}
-</fieldset>
-<fieldset class='form-group'>
-  {{input value=newSong.ytSource class='form-control' placeholder="Youtube Link"}}
-</fieldset>
- <div class='form-actions pull-xs-right'>
+  </fieldset>
+
+  <fieldset class='form-group'>
+    {{input value=newSong.ytSource class='form-control' placeholder="Youtube Link"}}
+  </fieldset>
+
+  {{! Form Actions}}
+  <div class='form-actions pull-xs-right'>
    <button class="btn btn-link" type="submit" {{action 'cancel'}}>Cancel</button>
    <button class="btn btn-success" type="submit" {{action 'save'}}>Save</button>
- </div>
+  </div>
+
 </form>
