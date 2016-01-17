@@ -1,6 +1,6 @@
 {
   "name": "devcamp-quiz",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Small description for devcamp-quiz goes here",
   "private": true,
   "directories": {
@@ -14,7 +14,7 @@
   },
   "repository": "",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 5.3.0"
   },
   "author": "",
   "license": "MIT",
