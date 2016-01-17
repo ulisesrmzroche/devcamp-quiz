@@ -1,5 +1,5 @@
 import Ember from 'ember';
-const { computed } = Ember;
+const { computed, on } = Ember;
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
@@ -34,6 +34,9 @@ export default Ember.Component.extend({
     willInput(){
       this.set('willInput', true);
     },
+    edit(resource){
+      this.set(`validations.${resource}.isEditing`, true);
+    },
     cancel(){
       this.set('willInput', false);
     },
@@ -42,9 +45,10 @@ export default Ember.Component.extend({
 
       if (isValid) {
         return this.get('newSong').save().then((song)=>{
-          return this.connectAlbumAndBand(song);
-        }).then(()=>{
-          return this.sendAction('onSuccess');
+          this.connectAlbumAndBand(song);
+          return song;
+        }).then((song)=>{
+          return this.sendAction('onSuccess', song);
         });
       }
     },
@@ -63,30 +67,59 @@ export default Ember.Component.extend({
     assignArtist(artist){
       this.set('newSong.artist', artist);
       this.set('isEditingArtist', false);
+      this.set('validations.artist.created', true);
+      this.set('validations.artist.isEditing', false);
+      this._handleValidationState('display', 'artist', true);
     },
     assignAlbum(album){
       this.set('newSong.album', album);
       this.set('isEditingAlbum', false);
+      this.set('validations.album.created', true);
+      this._handleValidationState('display', 'album', true);
+    },
+    resetTitle(){
+      this.set('validations.title.warnDanger', false);
+      this.set('validations.title.errorMessage', null);
+      this._clearValidationState('display', 'title');
     }
   },
   songs: computed(function(){
     return this.get('store').findAll('song');
   }),
 
+  _validateUniquenessOf(attribute, song, songs){
+    let songAttrList = songs.mapBy('title');
+    let attr = song.get(`${attribute}`);
+    songAttrList.pop();
+    return !songAttrList.contains(attr) ? true : false;
+  },
+
+  _validatePresenceOf(attribute, song){
+    let attr = song.get(`${attribute}`);
+    return attr !== '' || null ? true : false;
+  },
+
   _validateTitle(){
     return this.get('songs').then((songs)=>{
-      let songList = songs.mapBy('title').compact();
-      songList.pop();
-      let newSongName = this.get('newSong.title');
-      let songListContainsSong = songList.contains(newSongName);
-      return songListContainsSong;
-    }).then((songListContainsSong) => {
-      let isValid = songListContainsSong ? false : true;
-      this.set('validations.title.isValid', isValid);
-      if (!isValid) {
-        this.set('validations.title.warnDanger', true);
-      } else {
+      let isUnique = this._validateUniquenessOf('title', this.get('newSong'), songs);
+      let isPresent = this._validatePresenceOf('title', this.get('newSong'));
+      return { unique: isUnique, presence: isPresent } ;
+    }).then((validations) => {
+      let isValid = validations.unique && validations.presence;
+      if (isValid) {
         this.set('validations.title.warnDanger', false);
+        this.set('validations.title.hasSuccess', true);
+      } else {
+        this.set('validations.title.warnDanger', true);
+        this.set('validations.title.hasSuccess', false);
+        let errorMsg;
+        if (!validations.unique) {
+          errorMsg = 'Duplicate song title';
+        }
+        if (!validations.presence) {
+          errorMsg = 'Title is required';
+        }
+        this.set('validations.title.errorMessage', errorMsg);
       }
       this._handleValidationState('display', 'title', isValid);
     });
@@ -105,7 +138,6 @@ export default Ember.Component.extend({
     this._clearValidationState(strategy, attribute);
     if (strategy === 'display') {
       let $validationState = state ? 'has-success' : 'has-danger';
-      alert($validationState);
       return Ember.$(`#new-song-${attribute}-fieldset`).addClass($validationState);
     }
   },
@@ -114,6 +146,13 @@ export default Ember.Component.extend({
     title: {
       isValid: null,
       warnDanger: false,
+    },
+    artist: {
+      created: false,
+      isEditing: false
+    },
+    album: {
+      created: false
     }
   },
 

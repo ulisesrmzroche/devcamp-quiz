@@ -1,43 +1,36 @@
 {{#if compact}}
-
   <div class='card'>
     <div class='card-block'>
-      {{#link-to 'library.songs.song' song}}
-        {{song.title}}
+      {{#link-to 'library.songs.song' song class='btn btn-link'}}
+        <strong>{{song.title}}</strong>
       {{/link-to}}
       <div class='pull-xs-right'>
-        <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
-          {{#if isFavorite}}
-            <i class='fa fa-star'></i>
-          {{else}}
-            <i class='fa fa-star-o'></i>
-          {{/if}}
-        </button>
+        {{btn-toggle-favorite user=session.currentUser song=song}}
       </div>
     </div>
   </div>
+{{/if}}
 
-{{else}}
-<div class="card">
+{{#if expanded}}
+  <div class="card">
+  {{card/card-header header="Song"}}
+  {{#if song.ytSource}}
+    {{video-player song=song class='card-img-top'}}
+  {{/if}}
+
+
   <div class='card-block'>
-    {{video-player song=song}}
-  </div>
-  <div class="card-block">
-    <h4 class="card-title">{{song.title}}</h4>
-  </div>
-  <div class='card-block'>
-    <p class='card-text'>
-      <strong>Artist:</strong>
-      {{#link-to 'library.artists.artist' song.artist}}
-        {{song.artist.name}}
-      {{/link-to}}
-    </p>
-    <p class='card-text'>
-      <strong>Album:</strong>
-      {{#link-to 'library.albums.album' song.album}}
-        {{song.album.name}}
-      {{/link-to}}
-    </p>
+    <div class='row song-info'>
+      <div class='col-md-3'>
+        <h4 class="card-title">{{song.title}}</h4>
+      </div>
+      <div class='col-md-9'>
+        {{btn-toggle-favorite user=session.currentUser song=song class='pull-md-right'}}
+      </div>
+    </div>
+
+    {{artist-info-card compact=true artist=song.artist header="Artist"}}
+    {{album-info-card compact=true album=song.album header='Album'}}
   </div>
 </div>
 

@@ -1,13 +1,1 @@
-{{model.name}}
-
-{{#each model.songs as |song|}}
-  {{song.name}}
-{{else}}
-  No Songs
-{{/each}}
-
-{{#each model.albums as |album|}}
-  {{album.name}}
-{{else}}
-  No Albums
-{{/each}}
+{{artist-info-card artist=model expanded=true}}

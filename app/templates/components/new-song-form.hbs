@@ -1,38 +1,39 @@
+<div class='card'>
+  <div class='card-block'>
 <form class="form">
   <legend>New Song</legend>
   {{! Title}}
-
   <fieldset id="new-song-title-fieldset" class='form-group'>
-    <label for="exampleInputEmail1">Title</label>
-    {{input class='form-control' value=newSong.title focus-out='validateTitle'}}
+    <label for="exampleInputName2">Title</label>
+    {{input class='form-control' value=newSong.title focus-out='validateTitle' focus-in='resetTitle'}}
     {{#if validations.title.warnDanger}}
       <small class="text-muted">
-        Invalid/Duplicate Title
+        {{validations.title.errorMessage}}
       </small>
     {{/if}}
   </fieldset>
 
   {{! Artist}}
-  <fieldset class='form-group'>
-    {{#if isEditingArtist}}
+  <fieldset id="new-song-artist-fieldset" class='form-group'>
+    <label for="exampleInputName2">Artist</label>
+    {{#if validations.artist.isEditing}}
       {{input-select-artist id="new-artist-input-select"
                             options=artists
                             selectedValue=newSong.artist
-                            placeHolderText='Select Artist'
                             noMessagePlaceHolderText="Create New Artist"
                             onSuccess="assignArtist"}}
     {{else}}
-      {{input class='form-control' value=newSong.artist.name}}
+      <span {{action 'edit' 'artist'}}>{{input class='form-control' value=newSong.artist.name}}</span>
     {{/if}}
   </fieldset>
 
   {{! Album}}
-  <fieldset class='form-group'>
+  <fieldset id='new-song-album-fieldset' class='form-group'>
+    <label for="exampleInputName2">Album</label>
     {{#if isEditingAlbum}}
       {{input-select-album id="new-album-input-select"
                            options=albums
                            selectedValue=newSong.album
-                           placeHolderText='Select Album'
                            noMessagePlaceHolderText="Create New Album"
                            onSuccess="assignAlbum"}}
     {{else}}
@@ -43,13 +44,18 @@
   </fieldset>
 
   <fieldset class='form-group'>
-    {{input value=newSong.ytSource class='form-control' placeholder="Youtube Link"}}
+    <label for="exampleInputName2">Youtube URL</label>
+    {{input value=newSong.ytSource class='form-control' }}
   </fieldset>
 
   {{! Form Actions}}
-  <div class='form-actions pull-xs-right'>
-   <button class="btn btn-link" type="submit" {{action 'cancel'}}>Cancel</button>
-   <button class="btn btn-success" type="submit" {{action 'save'}}>Save</button>
+  <div class='form-actions'>
+   <button class="btn btn-success pull-xs-right" type="submit" {{action 'save'}}>Save</button>
+   <button class="btn btn-link pull-xs-right" type="submit" {{action 'cancel'}}>Cancel</button>
   </div>
-
 </form>
+</div>
+<div class='card-block'>
+
+</div>
+</div>

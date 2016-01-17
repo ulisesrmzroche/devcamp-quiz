@@ -4,15 +4,13 @@
     <h4 class="card-title">{{artist.name}}</h4>
   </div>
   <div class='card-block'>
-    <p class='card-text'>Artists</p>
+    <p class='card-text'>Albums</p>
     <ul>
       {{#each artist.albums as |album|}}
-        <li>
-          {{#link-to 'library.albums.album' album}}{{album.name}}{{/link-to}}
-        </li>
+        {{album-info-card compact=true album=album}}
       {{else}}
         <li>
-          No Artists Attached
+          No Albums Attached
         </li>
       {{/each}}
     </ul>
@@ -24,23 +22,24 @@
         <li>
           {{#link-to 'library.songs.song' song}}{{song.title}}{{/link-to}}
         </li>
+      {{else}}
+        <li>No Songs attached</li>
       {{/each}}
     </ul>
   </div>
 </div>
-{{else}}
+{{/if}}
+
+{{#if compact}}
   <div class='card'>
+    {{#if header}}
+      {{card/card-header header=header}}
+    {{/if}}
     <div class='card-block'>
-      {{#link-to 'library.artists.artist' artist}}
-        {{artist.name}}
+      {{#link-to 'library.artists.artist' artist class='btn btn-link'}}
+        <strong>{{artist.name}}</strong>
       {{/link-to}}
-      <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
-        {{#if isFavorite}}
-          <i class='fa fa-star'></i>
-        {{else}}
-          <i class='fa fa-star-o'></i>
-        {{/if}}
-      </button>
+      {{btn-toggle-favorite class='pull-xs-right'}}
     </div>
   </div>
 {{/if}}

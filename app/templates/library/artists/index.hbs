@@ -1,5 +1,5 @@
 {{#each model as |artist|}}
-  {{artist-info-card artist=artist}}
+  {{artist-info-card artist=artist compact=true}}
 {{else}}
   {{#warning-card title="No Artists in Library"}}
     {{#link-to 'library.albums.new' class='btn btn-primary'}}

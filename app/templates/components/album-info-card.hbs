@@ -1,46 +1,41 @@
 {{#if expanded}}
 <div class="card">
+  {{card/card-header header="Album"}}
   <div class="card-block">
     <h4 class="card-title">{{album.name}}</h4>
+    <div class='pull-md-right'>
+      {{btn-toggle-favorite album=album}}
+    </div>
   </div>
   <div class='card-block'>
     <p class='card-text'>Artists</p>
-    <ul>
       {{#each album.artists as |artist|}}
-        <li>
-          {{#link-to 'library.artists.artist' artist}}{{artist.name}}{{/link-to}}
-        </li>
+        {{artist-info-card compact=true artist=artist}}
       {{else}}
         <li>
           No Artists Attached
         </li>
       {{/each}}
-    </ul>
   </div>
   <div class="card-block">
     <p class='card-text'>Songs</p>
-    <ul>
-      {{#each album.songs as |song|}}
-        <li>
-          {{#link-to 'library.songs.song' song}}{{song.title}}{{/link-to}}
-        </li>
-      {{/each}}
-    </ul>
+    {{#each album.songs as |song|}}
+      {{song-info-card compact=true song=song}}
+    {{/each}}
   </div>
 </div>
-{{else}}
+{{/if}}
+
+{{#if compact}}
 <div class='card'>
+  {{#if header}}
+    {{card/card-header header=header}}
+  {{/if}}
   <div class='card-block'>
-    {{#link-to 'library.albums.album' album}}
-      {{album.name}}
+    {{#link-to 'library.albums.album' album class='btn btn-link'}}
+      <strong>{{album.name}}</strong>
     {{/link-to}}
-    <button class='btn btn-link btn-sm' {{action 'toggleFavorite'}}>
-      {{#if isFavorite}}
-        <i class='fa fa-star'></i>
-      {{else}}
-        <i class='fa fa-star-o'></i>
-      {{/if}}
-    </button>
+    {{btn-toggle-favorite class='pull-xs-right' user=session.currentUser album=album}}
   </div>
 </div>
 {{/if}}

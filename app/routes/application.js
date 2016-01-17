@@ -7,5 +7,10 @@ export default Ember.Route.extend({
       // noop
     })
     .catch(function() {});
+  },
+  actions: {
+    visitHome(){
+      return this.transitionTo('home');
+    }
   }
 });

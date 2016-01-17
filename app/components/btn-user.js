@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   actions: {
     signOut: function() {
       this.get("session").close();
+      this.sendAction('didLogOut');
     }
   }
 });

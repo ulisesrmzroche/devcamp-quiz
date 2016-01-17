@@ -1,14 +1,5 @@
 {{#each model as |album|}}
-  {{album-info-card album=album}}
+  {{album-info-card album=album compact=true}}
 {{else}}
-  <div class='card'>
-    <div class='card-block'>
-      <p class='card-title'>No Albums In Library Yet</p>
-    </div>
-    <div class='card-block'>
-    {{#link-to 'library.albums.new' class='btn btn-primary'}}
-      Add Album To Library
-    {{/link-to}}
-    </div>
-  </div>
+  {{warning-card title="No Albums in Library Yet"}}
 {{/each}}

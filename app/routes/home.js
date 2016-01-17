@@ -7,4 +7,9 @@ export default Ember.Route.extend({
       return this.transitionTo('myFavorites');
     }
   },
+  actions: {
+    viewFavorites(){
+      this.transitionTo('myFavorites');
+    }
+  }
 });

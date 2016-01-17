@@ -6,13 +6,22 @@
     </div>
   </form>
 {{else}}
-
   <form>
     <fieldset class="form-group">
-      <label for="exampleInputEmail1">Name</label>
-      {{input class='form-control' value=model.name}}
+      <label for="album-name">Name</label>
+      {{input class='form-control' value=album.name}}
     </fieldset>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Artist</label>
+        {{input-select-artist id="new-artist-input-select"
+                              options=artists
+                              selectedValue=newAlbum.artist
+                              noMessagePlaceHolderText="Create New Artist"
+                              onSuccess="assignArtist"}}
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary" {{action 'save'}}>Submit</button>
   </form>
 
 {{/if}}
