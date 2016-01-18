@@ -3,29 +3,32 @@ import InputSelect from "./input-select";
 import ValidationsMixin from './../mixins/validations';
 
 export default InputSelect.extend(ValidationsMixin, {
+  init(){
+    this._super();
+    this.set('validations', this._setupValidations());
+  },
   resourceName: "Artist",
   actions: {
     noMatchesFound(){
       this._createArtist();
     },
   },
-  getArtists(){
-    return this.get('store').findAll('artist');
-  },
-  validations: Ember.inject.service(),
   _validate(){
-    return this.getArtists().then((artists)=>{
+    return this.get('store').findAll('artist')
+    .then((artists)=>{
       let isUnique = this.validateUniquenessOf('name', this.get('inputVal'), artists);
-      let isPresent = this.validatePresenceOf('name', this.get('inputVal'));
-      return isUnique && isPresent ? true : new Error("Invalid/Duplicate Artist");
+      let isPresent = this.get('inputVal') !== '';
+      if (isUnique && isPresent) {
+        return true;
+      } else {
+        this.set('validations.isNotValid', true);
+        throw new Error("Invalid/Duplicate Artist");
+      }
     });
   },
   store: Ember.inject.service(),
   _createArtist(){
     return this._validate()
-    .catch(()=>{
-      return false;
-    })
     .then(()=>{
       let artist = this.get('store').createRecord('artist');
       artist.set('name', this.get('inputVal'));
@@ -35,7 +38,14 @@ export default InputSelect.extend(ValidationsMixin, {
       this.sendAction('onSuccess', artist);
       this.set('validations.resource.created', true);
       this.set('validations.didCreate', true);
-      this.set('visibility', 'hidden');
+      this._clearDisplayState();
+    })
+    .catch(()=>{
+      this.sendAction('didError', 'artist', 'isInvalid');
+      this.set('validations.isNotValid', true);
+    })
+    .finally(()=>{
+      this._reset();
     });
   }
 });

@@ -1,6 +1,19 @@
 <div class="typeahead-wrap">
 
-{{input class=inputClazz value=selectedValue placeholder=placeHolderText autocomplete="off" spellcheck="false"}}
+  {{input class=inputClazz value=selectedValue placeholder=placeHolderText autocomplete="off" spellcheck="false"}}
+
+  {{! Validation Messages}}
+  {{#if validations.isEmpty}}
+    {{#form/help-text}}
+      {{resourceName}} is required.
+    {{/form/help-text}}
+  {{/if}}
+
+  {{#if validations.isNotValid}}
+    {{#form/help-text}}
+      Invalid/Duplicate {{resourceName}}
+    {{/form/help-text}}
+  {{/if}}
 
 {{#if hasStarted}}
 <span class="tt-dropdown-menu {{visibility}}">

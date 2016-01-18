@@ -3,20 +3,18 @@
   {{card/card-header header='My Favorites'}}
   <div class='card-block'>
     <ul class="nav nav-tabs" role="tablist">
+      {{#each sections as |section|}}
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#favorites-tab-songs" role="tab">Songs</a>
+        <a class="nav-link" data-toggle="tab" href="#favorites-tab-{{section}}" role="tab">
+          <span class='text-capitalize'>{{section}}</span>
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#favorites-tab-artists" role="tab">Artists</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#favorites-tab-albums" role="tab">Albums</a>
-      </li>
+      {{/each}}
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="favorites-tab-songs" role="tabpanel">
         {{#each user.songs as |song|}}
-          {{song-info-card compact=true song=song user=user}}
+          {{song-info-card compact=true song=song user=user withArtist=true}}
         {{else}}
           {{warning-card title="No Favorite Songs Yet"}}
         {{/each}}

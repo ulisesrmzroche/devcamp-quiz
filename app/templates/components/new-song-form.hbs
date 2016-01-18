@@ -1,31 +1,51 @@
 <div class='card'>
+  {{card/card-header header="New Song"}}
   <div class='card-block'>
-<form class="form">
-  <legend>New Song</legend>
-  {{! Title}}
-  <fieldset id="new-song-title-fieldset" class='form-group'>
-    <label for="exampleInputName2">Title</label>
-    {{input class='form-control' value=newSong.title focus-out='validateTitle' focus-in='resetTitle'}}
-    {{#if validations.title.warnDanger}}
-      <small class="text-muted">
-        {{validations.title.errorMessage}}
-      </small>
-    {{/if}}
-  </fieldset>
+    {{#if validations.isNotValid}}
 
-  {{! Artist}}
-  <fieldset id="new-song-artist-fieldset" class='form-group'>
-    <label for="exampleInputName2">Artist</label>
-    {{#if validations.artist.isEditing}}
-      {{input-select-artist id="new-artist-input-select"
-                            options=artists
-                            selectedValue=newSong.artist
-                            noMessagePlaceHolderText="Create New Artist"
-                            onSuccess="assignArtist"}}
-    {{else}}
-      <span {{action 'edit' 'artist'}}>{{input class='form-control' value=newSong.artist.name}}</span>
+      <div class="alert alert-warning alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+      </div>
     {{/if}}
-  </fieldset>
+    <form class="form">
+      {{! Title}}
+      <fieldset id="new-song-title-fieldset" class='form-group'>
+        <label for="exampleInputName2">Title</label>
+        {{input class='form-control' value=newSong.title focus-out='validateTitle' focus-in='resetTitle'}}
+        {{#if validations.title.warnDanger}}
+          <small class="text-muted">
+            {{validations.title.errorMessage}}
+          </small>
+        {{/if}}
+      </fieldset>
+
+      {{! Artist}}
+      <fieldset id="new-song-artist-fieldset" class='form-group'>
+        <label for="exampleInputName2">Artist</label>
+        {{#if isEditingArtist}}
+          {{input-select-artist id="new-artist-input-select"
+                                options=artists
+                                selectedValue=newSong.artist
+                                noMessagePlaceHolderText="Create New Artist"
+                                onSuccess="assignArtist"
+                                didError="alertError"
+                                }}
+        {{else}}
+          <span {{action 'edit' 'artist'}}>
+            {{input class='form-control' value=newSong.artist.name}}
+          </span>
+        {{/if}}
+        {{#if validations.artist.warnDanger}}
+          {{#if validations.artist.isInvalid}}
+            {{#form/help-text}}
+              Invalid/Duplicate Artist
+            {{/form/help-text}}
+          {{/if}}
+        {{/if}}
+      </fieldset>
 
   {{! Album}}
   <fieldset id='new-song-album-fieldset' class='form-group'>
@@ -35,7 +55,9 @@
                            options=albums
                            selectedValue=newSong.album
                            noMessagePlaceHolderText="Create New Album"
-                           onSuccess="assignAlbum"}}
+                           onSuccess="assignAlbum"
+                           didError="alertError"
+      }}
     {{else}}
       <span {{action 'editAlbum'}}>
         {{input class='form-control' value=newSong.album.name}}
@@ -45,7 +67,7 @@
 
   <fieldset class='form-group'>
     <label for="exampleInputName2">Youtube URL</label>
-    {{input value=newSong.ytSource class='form-control' }}
+    {{input value=newSong.ytSource class='form-control'}}
   </fieldset>
 
   {{! Form Actions}}

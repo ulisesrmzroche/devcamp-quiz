@@ -11,14 +11,6 @@
         <p class='card-text'>No Albums Attached</p>
       {{/each}}
   </div>
-  <div class="card-block">
-    <p class='card-text'>Songs</p>
-    {{#each artist.songs as |song|}}
-      {{song-info-card compact=true song=song}}
-    {{else}}
-      <li>No Songs attached</li>
-    {{/each}}
-  </div>
 </div>
 {{/if}}
 

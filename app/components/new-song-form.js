@@ -34,23 +34,38 @@ export default Ember.Component.extend({
     willInput(){
       this.set('willInput', true);
     },
+    alertError(model, error){
+      let modelName = model.toLowerCase();
+      let isEmpty = error === "isEmpty";
+      let isInvalid = error === 'isInvalid';
+      if (isEmpty) {
+        this.set(`validations.${modelName}.isEmpty`, isEmpty);
+      }
+      if (isInvalid) {
+        this.set(`validations.${modelName}.isInvalid`, true);
+        this.set(`validations.${modelName}.warnDanger`, true);
+      }
+      this._handleValidationState('display', modelName, false);
+    },
     edit(resource){
       this.set(`validations.${resource}.isEditing`, true);
     },
     cancel(){
       this.set('willInput', false);
+      return this.sendAction('didCancel');
     },
     save(){
       let isValid = this._validate();
-
-      if (isValid) {
-        return this.get('newSong').save().then((song)=>{
-          this.connectAlbumAndBand(song);
-          return song;
-        }).then((song)=>{
-          return this.sendAction('onSuccess', song);
-        });
+      if (!isValid) {
+        return this.set('validations.isNotValid', true);
       }
+
+      return this.get('newSong').save().then((song)=>{
+        this.connectAlbumAndBand(song);
+        return song;
+      }).then((song)=>{
+        return this.sendAction('onSuccess', song);
+      });
     },
     editAlbum(){
       this.set('isEditingAlbum', true);
@@ -138,7 +153,13 @@ export default Ember.Component.extend({
     this._clearValidationState(strategy, attribute);
     if (strategy === 'display') {
       let $validationState = state ? 'has-success' : 'has-danger';
-      return Ember.$(`#new-song-${attribute}-fieldset`).addClass($validationState);
+      if (attribute === 'artist' && $validationState === 'has-danger') {
+        Ember.$('#new-song-artist-fieldset input').css({border: '1px solid red'});
+      }
+      if (attribute === 'album' && $validationState === 'has-danger') {
+        Ember.$('#new-song-album-fieldset input').css({border: '1px solid red'});
+      }
+      Ember.$(`#new-song-${attribute}-fieldset`).addClass($validationState);
     }
   },
 
@@ -149,7 +170,8 @@ export default Ember.Component.extend({
     },
     artist: {
       created: false,
-      isEditing: false
+      isEditing: false,
+      warnDanger: false,
     },
     album: {
       created: false
@@ -162,7 +184,7 @@ export default Ember.Component.extend({
     } else {
       let model = this.get('newSong');
       let isValid = model.get('title') && model.get('album') && model.get('artist');
-      return isValid;
+      return isValid ? true : false;
     }
   },
   willDestroyElement(){

@@ -2,7 +2,7 @@
   <div class='card'>
     <div class='card-block'>
       {{#link-to 'library.songs.song' song class='btn btn-link'}}
-        <strong>{{song.title}}</strong>
+        <strong>{{song.title}}</strong> {{#if withArtist}} by {{song.artist.name}} {{/if}}
       {{/link-to}}
       <div class='pull-xs-right'>
         {{btn-toggle-favorite user=session.currentUser song=song}}
