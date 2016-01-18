@@ -1,7 +1,12 @@
 <div class='card'>
-  <div class='card-block'>
-    <p class='card-title'>{{title}}</p>
-  </div>
+  {{#if header}}
+    {{card/card-header header=header}}
+  {{/if}}
+  {{#if title}}
+    <div class='card-block'>
+      <p class='card-title'>{{title}}</p>
+    </div>
+  {{/if}}
   <div class='card-block'>
     {{yield}}
   </div>

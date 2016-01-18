@@ -40,7 +40,7 @@
   </div>
 </div>
 {{else}}
-  {{#warning-card title="No Favorites Yet"}}
-    Add Some from the Library
-  {{/warning-card}}
+<div class="alert alert-info" role="alert">
+  <strong>Hey there!</strong> You don't have any favorites right now but you can add some from the {{#link-to 'library.songs' class='alert-link'}}Music Library{{/link-to}}
+</div>
 {{/if}}
