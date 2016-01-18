@@ -5,27 +5,19 @@
   </div>
   <div class='card-block'>
     <p class='card-text'>Albums</p>
-    <ul>
       {{#each artist.albums as |album|}}
         {{album-info-card compact=true album=album}}
       {{else}}
-        <li>
-          No Albums Attached
-        </li>
+        <p class='card-text'>No Albums Attached</p>
       {{/each}}
-    </ul>
   </div>
   <div class="card-block">
     <p class='card-text'>Songs</p>
-    <ul>
-      {{#each artist.songs as |song|}}
-        <li>
-          {{#link-to 'library.songs.song' song}}{{song.title}}{{/link-to}}
-        </li>
-      {{else}}
-        <li>No Songs attached</li>
-      {{/each}}
-    </ul>
+    {{#each artist.songs as |song|}}
+      {{song-info-card compact=true song=song}}
+    {{else}}
+      <li>No Songs attached</li>
+    {{/each}}
   </div>
 </div>
 {{/if}}
@@ -39,7 +31,7 @@
       {{#link-to 'library.artists.artist' artist class='btn btn-link'}}
         <strong>{{artist.name}}</strong>
       {{/link-to}}
-      {{btn-toggle-favorite class='pull-xs-right'}}
+      {{btn-toggle-favorite artist=artist class='pull-xs-right'}}
     </div>
   </div>
 {{/if}}

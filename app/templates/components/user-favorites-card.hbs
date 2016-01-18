@@ -24,7 +24,7 @@
 
       <div class="tab-pane" id="favorites-tab-artists" role="tabpanel">
         {{#each user.artists as |artist|}}
-          {{artist-info-card expanded=false artist=artist}}
+          {{artist-info-card compact=true artist=artist}}
         {{else}}
           {{warning-card title="No Favorite Artists Yet"}}
         {{/each}}

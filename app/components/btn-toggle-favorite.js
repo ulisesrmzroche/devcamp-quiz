@@ -13,7 +13,6 @@ export default Ember.Component.extend({
     let user = this.get('session.currentUser');
     let info = this._determineModel();
     if (info.resourceName) {
-
       let list = user.get(info.resourceName);
       return list.contains(record);
     }
@@ -56,14 +55,17 @@ export default Ember.Component.extend({
   },
   actions: {
     toggleFavorite(){
-      let currentUser = this.get('user');
+      let currentUser = this.get('session.currentUser');
       let info = this._determineModel();
-      if (this.get('isFavorite')) {
+      let isFavorite = this._validate(info.record);
+      if (isFavorite) {
         currentUser.get(info.resourceName).removeObject(info.record);
       } else {
         currentUser.get(info.resourceName).pushObject(info.record);
       }
-      return currentUser.save();
+      return currentUser.save().then(()=>{
+        this.toggleProperty('isFavorite');
+      });
     }
   }
 });

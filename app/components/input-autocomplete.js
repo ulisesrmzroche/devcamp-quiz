@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import InputSelect from './input-select';
 
-export default Ember.Component.extend({
+export default InputSelect.extend({
 });
