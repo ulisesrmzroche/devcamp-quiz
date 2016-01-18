@@ -2,6 +2,14 @@
 
 [ ![Codeship Status for ulisesrmzroche/devcamp-quiz](https://codeship.com/projects/6c1b2870-9fa2-0133-a89b-3206c6610001/status?branch=master)](https://codeship.com/projects/127940)
 
+## TODO
+
+[] Clean up unneeded components
+[] Fix sensitivity of auto-complete validations on New Song Form
+[] Implement Search
+[] Add multiple songs at once
+[] Allow for stand-alone creation of songs, albums, and artists
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
