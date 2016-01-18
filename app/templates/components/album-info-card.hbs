@@ -33,7 +33,7 @@
   {{/if}}
   <div class='card-block'>
     {{#link-to 'library.albums.album' album class='btn btn-link'}}
-      <strong>{{album.name}}</strong>
+      <strong>{{album.name}}</strong> by {{album.artists.firstObject.name}}
     {{/link-to}}
     {{btn-toggle-favorite class='pull-xs-right' user=session.currentUser album=album}}
   </div>
