@@ -4,11 +4,11 @@
 
 ## TODO
 
-[] Clean up unneeded components
-[] Fix sensitivity of auto-complete validations on New Song Form
-[] Implement Search
-[] Add multiple songs at once
-[] Allow for stand-alone creation of songs, albums, and artists
+* [ ] Clean up unneeded components
+* [ ] Fix sensitivity of auto-complete validations on New Song Form
+* [ ] Implement Search
+* [ ] Add multiple songs at once
+* [ ] Allow for stand-alone creation of songs, albums, and artists
 
 ## Prerequisites
 
